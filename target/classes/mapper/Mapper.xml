@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coding.mapper.Mapper">
+
+<!-- 회원 -->
+	<insert id="createMember" > 
+ 	INSERT INTO MEMBER (USER_ID, USER_NAME, USER_EMAIL, USER_NICKNAME, USER_REGDATE)
+ 	VALUES (#{user_Id},#{user_Name},#{user_Email},#{user_NickName},#{user_RegDate})
+ 	</insert>
+ 	
+ 	<select id="listMember" resultType="com.coding.vo.MemberVO"> <!-- 특수문자가 query안에 포함 될 경우 CDATA로 감싸준다 -->
+ 	<![CDATA[
+ 	SELECT USER_ID, USER_NAME, USER_EMAIL, USER_NICKNAME, USER_REGDATE
+ 	FROM MEMBER
+ 	WHERE USER_REGDATE > TO_DATE('2017'||'-01-01','YYYY-MM-DD')
+ 	ORDER BY USER_REGDATE DESC
+ 	]]>
+ 	</select>
+ 	
+ 	<select id="readMember" resultType="com.coding.vo.MemberVO">
+ 	SELECT USER_ID, USER_NAME, USER_EMAIL, USER_NICKNAME, USER_REGDATE
+ 	FROM MEMBER
+ 	WHERE USER_ID = #{user_Id}
+ 	</select>
+<!-- 회원 끝-->
+<!-- private String user_Id;
+	private String user_Name;
+	private String user_Email;
+	private String user_NickName;
+	private String user_RegDate; 
+	
+	public void createMember(MemberVO vo)throws Exception; //회원생성 c
+	public List<MemberVO> listMember()throws Exception; //전체 회원 조회 r
+	public void infoMember(MemberVO vo)throws Exception; //회원 상세조회 u
+	public void deleteMember(MemberVO vo)throws Exception; //회원탈퇴 d
+	-->
+</mapper>
